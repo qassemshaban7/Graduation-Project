@@ -1,0 +1,57 @@
+﻿@using GP_MVC.ViewModels
+@model Survey
+
+@{
+    ViewData["Title"] = "Create Survey";
+    Layout = "~/Areas/Manager/Views/Shared/_Layout.cshtml";
+}
+
+<div class="br-pagetitle">
+    <h3 class="text-info mr-3">Add New Survey</h3>
+</div>
+
+<div class="br-pagebody">
+    <div class="br-section-wrapper">
+        <form id="dateForm" method="post" asp-action="Create" asp-controller="Surveys">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+            <div class="form-group">
+                <label class="text-dark font-weight-bold">Survey Name:</label>
+                <input asp-for="SurveyName" class="form-control" placeholder="Survey Name" required />
+                <span class="text-danger" asp-validation-for="SurveyName"></span>
+            </div>
+            <div class="form-group">
+                <label class="text-dark font-weight-bold">Start Date:</label>
+                <input asp-for="StartDate" class="form-control" placeholder="Start Date" value="@DateTime.Now.ToString("yyyy-MM-ddTHH:mm")" />
+                <span class="text-danger" asp-validation-for="StartDate"></span>
+            </div>
+
+            <div class="form-group">
+                <label class="text-dark font-weight-bold">End Date:</label>
+                <input asp-for="EndDate" class="form-control" placeholder="End Date" value="@DateTime.Now.ToString("yyyy-MM-ddTHH:mm")" />
+                <span class="text-danger" asp-validation-for="EndDate"></span>
+            </div>
+
+
+            <div class="form-layout-footer mg-t-30 text-center">
+                <input type="submit" value="Add" class="btn btn-info">
+                <a asp-action="Index" class="btn btn-secondary">Back</a>
+            </div>
+        </form>
+    </div>
+</div>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+
+    <script>
+        $(document).ready(function () {
+            var errorMessage = '@TempData["ErrorMessage"]';
+            if (errorMessage) {
+                alert(errorMessage);
+            }
+        });
+    </script>
+}

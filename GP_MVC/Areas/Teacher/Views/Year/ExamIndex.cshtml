@@ -1,0 +1,232 @@
+﻿@model IEnumerable<Exam>
+@{
+    ViewData["Title"] = "Exams List";
+    Layout = "~/Areas/Teacher/Views/Shared/_Layout.cshtml";
+}
+
+@section head {
+    <!-- BEGIN PAGE LEVEL STYLES -->
+    <link rel="stylesheet" type="text/css" href="~/lib/table/datatable/datatables.css">
+    <link rel="stylesheet" type="text/css" href="~/lib/table/datatable/dt-global_style.css">
+    <style>
+
+        .br-pagetitle {
+            margin-bottom: 20px;
+        }
+
+        .br-section-wrapper {
+            padding: 20px; 
+        }
+
+
+        .table-wrapper {
+            overflow-x: auto; 
+        }
+
+        table.dataTable {
+            width: 100%;
+            margin: 0 auto; 
+        }
+
+        .dataTables_wrapper .dataTables_filter input {
+            margin-left: 10px;
+            width: 150px;
+        }
+
+        .dataTables_wrapper .dataTables_paginate .paginate_button {
+            margin-left: 3px; 
+        }
+
+        th.sorting::after, th.sorting_asc::after, th.sorting_desc::after {
+            position: relative;
+            float: right;
+            margin-top: -18px;
+            margin-right: -8px;
+        }
+
+        th.sorting, th.sorting_asc, th.sorting_desc {
+            padding-right: 10px; 
+        }
+
+
+        .btn-action {
+            margin-right: 5px; 
+        }
+    </style>
+    <!-- END PAGE LEVEL STYLES -->
+}
+
+<div class="br-pagetitle">
+    <i class="fas fa-calendar-alt fa-6x text-info"></i>
+    <div class="row">
+        <div class="col-lg-10 col-10">
+            <h3 class="text-info">Exams List</h3>
+        </div>
+        <div class="col-lg-2 col-7 mb-2">
+            <a asp-action="AddExam" asp-controller="Year" asp-route-id="@ViewBag.MaterialId" class="btn btn-success">
+                <i class="fas fa-plus"></i> Add Exam
+            </a>
+        </div>
+    </div>
+</div>
+
+<div class="br-pagebody">
+    <div class="br-section-wrapper">
+        <div class="table-wrapper">
+            <table id="examsTable" class="table display responsive nowrap">
+                <thead>
+                    <tr>
+                        <th>Name</th>
+                        <th>Grade</th>
+                        <th>Material</th>
+                        <th>Image</th>
+                        <th>Edit</th>
+                        <th>Delete</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model)
+                    {
+                        <tr>
+                            <td>@item.Name</td>
+                            <td>@item.Exam_Grade</td>
+                            <td>@item.Material.Name</td>
+                            <td>
+                                <a class="image-receipt" href="http://ablexav1.runasp.net/GeneralExams/@item.Image">
+                                    <img src="http://ablexav1.runasp.net/GeneralExams/@item.Image" alt="Exam Photo" width="50" height="50" />
+                                </a>
+                            </td>
+                            <td>
+                                <a asp-action="EditExam" asp-controller="Year" asp-route-id="@item.Id" class="btn btn-primary btn-action text-white">
+                                    <i class="fas fa-edit"></i>
+                                </a>
+                            </td>
+                            <td>
+                                <a asp-action="DeleteExam" asp-controller="Year" asp-route-id="@item.Id" class="btn btn-danger btn-action">
+                                    <i class="fas fa-trash-alt"></i>
+                                </a>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+@section scripts {
+    <!-- BEGIN PAGE LEVEL SCRIPTS -->
+    <script src="~/lib/table/datatable/datatables.js"></script>
+    <script>
+        $(document).ready(function () {
+            $('#examsTable').DataTable({
+                "ordering": false,
+                "language": {
+                    "emptyTable": "No data available",
+                    "info": "Showing _START_ to _END_ of _TOTAL_ entries",
+                    "infoEmpty": "Showing 0 to 0 of 0 entries",
+                    "lengthMenu": "Show _MENU_ entries",
+                    "loadingRecords": "Loading...",
+                    "processing": "Processing...",
+                    "search": "Search:",
+                    "zeroRecords": "No matching records found",
+                    "paginate": {
+                        "first": "First",
+                        "last": "Last",
+                        "next": "Next",
+                        "previous": "Previous"
+                    }
+                },
+                "oLanguage": {
+                    "oPaginate": {
+                        "sPrevious": '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-arrow-left"><line x1="19" y1="12" x2="5" y2="12"></line><polyline points="12 19 5 12 12 5"></polyline></svg>',
+                        "sNext": '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-arrow-right"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>'
+                    },
+                    "sInfo": "Total results _TOTAL_",
+                    "sSearch": '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-search"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>',
+                    "sSearchPlaceholder": "Search...",
+                    "sLengthMenu": "Results : _MENU_",
+                },
+                "stripeClasses": [],
+                "lengthMenu": [7, 10, 20, 50],
+                "pageLength": 20,
+                drawCallback: function () {
+                    $('.dataTables_paginate > .pagination').addClass('pagination-style-13 pagination-bordered mb-5');
+                }
+            });
+        });
+    </script>
+    <link href="~/lib/toaster/toaster.css" rel="stylesheet" />
+    <script src="~/lib/toaster/toaster.js"></script>
+
+    <script type="text/javascript">
+        $(document).ready(function () {
+            var created = $("#created").data("value");
+            if (created == "True") {
+                toastr.options = {
+                    "closeButton": false,
+                    "debug": false,
+                    "newestOnTop": false,
+                    "progressBar": true,
+                    "positionClass": "toast-top-right",
+                    "preventDuplicates": true,
+                    "onclick": null,
+                    "showDuration": "300",
+                    "hideDuration": "1000",
+                    "timeOut": "12000",
+                    "extendedTimeOut": "1000",
+                    "showEasing": "swing",
+                    "hideEasing": "linear",
+                    "showMethod": "fadeIn",
+                    "hideMethod": "fadeOut"
+                }
+                toastr.success("Exam added successfully");
+            }
+
+            var updated = $("#updated").data("value");
+            if (updated == "True") {
+                toastr.options = {
+                    "closeButton": false,
+                    "debug": false,
+                    "newestOnTop": false,
+                    "progressBar": true,
+                    "positionClass": "toast-top-right",
+                    "preventDuplicates": true,
+                    "onclick": null,
+                    "showDuration": "300",
+                    "hideDuration": "1000",
+                    "timeOut": "12000",
+                    "extendedTimeOut": "1000",
+                    "showEasing": "swing",
+                    "hideEasing": "linear",
+                    "showMethod": "fadeIn",
+                    "hideMethod": "fadeOut"
+                }
+                toastr.success("Exam updated successfully");
+            }
+
+            var deleted = $("#deleted").data("value");
+            if (deleted == "True") {
+                toastr.options = {
+                    "closeButton": false,
+                    "debug": false,
+                    "newestOnTop": false,
+                    "progressBar": true,
+                    "positionClass": "toast-top-right",
+                    "preventDuplicates": true,
+                    "onclick": null,
+                    "showDuration": "300",
+                    "hideDuration": "1000",
+                    "timeOut": "12000",
+                    "extendedTimeOut": "1000",
+                    "showEasing": "swing",
+                    "hideEasing": "linear",
+                    "showMethod": "fadeIn",
+                    "hideMethod": "fadeOut"
+                }
+                toastr.success("Exam deleted successfully");
+            }
+        });
+    </script>
+    <!-- END PAGE LEVEL SCRIPTS -->
+}

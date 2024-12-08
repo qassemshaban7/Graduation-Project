@@ -1,0 +1,68 @@
+﻿@model Question
+
+@{
+    ViewData["Title"] = "Create Question";
+    Layout = "~/Areas/Manager/Views/Shared/_Layout.cshtml";
+}
+
+<div class="br-pagetitle">
+    <h3 class="text-info mr-3"> Add New Question (@ViewBag.surveyName)</h3>
+</div>
+
+<div class="br-pagebody">
+    <div class="br-section-wrapper">
+        <form method="post" asp-action="Create" asp-controller="Question">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+            <div class="form-group">
+                <label class="text-dark font-weight-bold">Question Content:</label>
+                <input asp-for="QuestionText" class="form-control" placeholder=" Question Content" required />
+                <span class="text-danger" asp-validation-for="QuestionText"></span>
+            </div>
+
+
+            <div class="form-group answer-field">
+                <label class="text-dark font-weight-bold">Answer 1:</label>
+                <input asp-for="FirstAnswer" id="firstAnswer" class="form-control" placeholder=" Answer 1" />
+                <span class="text-danger" asp-validation-for="FirstAnswer"></span>
+            </div>
+            <div class="form-group answer-field">
+                <label class="text-dark font-weight-bold">Answer 2:</label>
+                <input asp-for="SecondAnswer" class="form-control" placeholder=" Answer 2" />
+                <span class="text-danger" asp-validation-for="SecondAnswer"></span>
+            </div>
+            <div class="form-group answer-field">
+                <label class="text-dark font-weight-bold">Answer 3:</label>
+                <input asp-for="ThirdAnswer" class="form-control" placeholder=" Answer 3" />
+                <span class="text-danger" asp-validation-for="ThirdAnswer"></span>
+            </div>
+            <div class="form-group answer-field">
+                <label class="text-dark font-weight-bold">Answer 4:</label>
+                <input asp-for="FourthAnswer" class="form-control" placeholder=" Answer 4" />
+                <span class="text-danger" asp-validation-for="FourthAnswer"></span>
+            </div>
+            <input type="hidden" asp-for="SurveyId" value="@ViewBag.surveyId" />
+            <div class="form-layout-footer mg-t-30 text-center">
+
+                <div class="form-layout-footer mg-t-30 text-center">
+                    <input type="submit" value="Add" class="btn btn-info">
+                    <a asp-action="Index" class="btn btn-secondary">Back</a>
+                </div>
+        </form>
+    </div>
+</div>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+
+    <script>
+        $(document).ready(function () {
+            var errorMessage = '@TempData["ErrorMessage"]';
+            if (errorMessage) {
+                alert(errorMessage);
+            }
+        });
+    </script>
+}

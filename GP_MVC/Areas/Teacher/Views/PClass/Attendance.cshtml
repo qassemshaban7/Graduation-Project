@@ -1,0 +1,125 @@
+﻿@model List<Attendence>
+
+@{
+    ViewData["Title"] = "Student Attendance";
+    Layout = "~/Areas/Teacher/Views/Shared/_Layout.cshtml";
+}
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Student Attendance</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #FFFFFF;
+            color: #3C3883;
+            margin: 0;
+            padding: 20px;
+        }
+
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+            .header h2 {
+                color: #6C63FF;
+                border-bottom: 2px solid #6C63FF;
+                padding-bottom: 10px;
+                margin: 0;
+            }
+
+        .buttons {
+            display: flex;
+            gap: 10px;
+        }
+
+        .btn-attendance-chart, .btn-download {
+            background-color: #6C63FF;
+            color: #FFFFFF;
+            padding: 10px 20px;
+            text-decoration: none;
+            border-radius: 5px;
+            font-size: 16px;
+            display: inline-flex;
+            align-items: center;
+        }
+
+            .btn-attendance-chart:hover, .btn-download:hover {
+                background-color: #5a54d4;
+            }
+
+            .btn-attendance-chart i, .btn-download i {
+                margin-right: 5px;
+            }
+
+        .styled-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+            font-size: 18px;
+            text-align: left;
+            background-color: #FFFFFF;
+            border: 1px solid #dddddd;
+        }
+
+            .styled-table thead tr {
+                background-color: #6C63FF;
+                color: #FFFFFF;
+            }
+
+            .styled-table th,
+            .styled-table td {
+                padding: 12px 15px;
+                border: 1px solid #dddddd;
+            }
+
+            .styled-table tbody tr:nth-of-type(even) {
+                background-color: #f3f3f3;
+            }
+    </style>
+</head>
+<body>
+
+    <div class="header">
+        <h2>@ViewBag.Stu.Name</h2>
+        <div class="buttons">
+            <a asp-action="Charts" asp-controller="PClass" asp-route-id="@ViewBag.Stu.Id" class="btn-attendance-chart">
+                <i class="fas fa-chart-line"></i> Attendance Flow Chart
+            </a>
+            <a asp-action="ExcelForOneStudent" asp-controller="PClass" asp-route-id="@ViewBag.Stu.Id" class="btn-download">
+                <i class="fas fa-file-alt"></i> Download report
+            </a>
+        </div>
+    </div>
+
+    <div class="table-container">
+        <table class="styled-table">
+            <thead>
+                <tr>
+                    <th>Date Day</th>
+                    <th>Part One</th>
+                    <th>Part Two</th>
+                    <th>Total</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var attendance in Model)
+                {
+                    <tr>
+                        <td>@attendance.Date_Day.ToShortDateString()</td>
+                        <td>@attendance.PartOne</td>
+                        <td>@attendance.PartTwo</td>
+                        <td>@attendance.Total</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+
+</body>
+</html>

@@ -1,0 +1,3 @@
+﻿<Project>
+  <Import Project="..\build\GP_MVC.props" />
+</Project>

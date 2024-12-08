@@ -1,0 +1,124 @@
+﻿@model GP_MVC.Models.PClass
+@{
+    ViewData["Title"] = "Edit Class";
+    Layout = "~/Areas/Manager/Views/Shared/_Layout.cshtml";
+}
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Edit Class</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #FFFFFF;
+            color: #3C3883;
+            margin: 0;
+            padding: 20px;
+        }
+
+        h2 {
+            color: #6C63FF;
+            border-bottom: 2px solid #6C63FF;
+            padding-bottom: 10px;
+        }
+
+        form {
+            background-color: #f9f9f9;
+            padding: 20px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            max-width: 600px;
+            margin: auto;
+        }
+
+        .form-group {
+            margin-bottom: 15px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 5px;
+            color: #3C3883;
+        }
+
+        input[type="text"],
+        input[type="number"],
+        select {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+        }
+
+        button {
+            background-color: #6C63FF;
+            color: #FFFFFF;
+            border: none;
+            padding: 10px 15px;
+            cursor: pointer;
+            border-radius: 5px;
+        }
+
+            button:hover {
+                background-color: #3C3883;
+            }
+
+        .text-danger {
+            color: red;
+            font-size: 0.9em;
+            margin-top: 5px;
+        }
+    </style>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+</head>
+<body>
+
+    <div class="br-pagetitle">
+        <h3 class="text-info mr-3">Edit Class</h3>
+    </div><!-- br-pagetitle -->
+
+    <div class="br-pagebody">
+        <div class="br-section-wrapper">
+            <div class="row">
+                <div class="col-xl-12">
+                    <div class="form-layout form-layout-4">
+                        <form method="post" asp-action="Edit" asp-controller="PClass" asp-route-returnurl="@ViewData["ReturnUrl"]">
+                            <input type="hidden" asp-for="Id" />
+                            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+                            <div class="form-group row mb-3">
+                                <label class="col-sm-4 form-control-label">Class Name: <span class="tx-danger">*</span></label>
+                                <div class="col-sm-8">
+                                    <input asp-for="Name" type="text" class="form-control" placeholder="Class Name" required>
+                                    <span asp-validation-for="Name" class="text-danger"></span>
+                                </div>
+                            </div><!-- form-group -->
+
+                            <div class="form-layout-footer mg-t-30 text-center">
+                                <input type="submit" value="Save" class="btn btn-info">
+                                <a asp-action="Index" asp-controller="PClass" class="btn btn-secondary">Back</a>
+                            </div><!-- form-layout-footer -->
+                        </form>
+                    </div><!-- form-layout -->
+                </div><!-- col-12 -->
+            </div><!-- row -->
+        </div><!-- br-section-wrapper -->
+    </div><!-- br-pagebody -->
+    @section Scripts {
+        @{
+            await Html.RenderPartialAsync("_ValidationScriptsPartial");
+        }
+
+        <script>
+            $(document).ready(function () {
+                var errorMessage = '@TempData["ErrorMessage"]';
+                if (errorMessage) {
+                    alert(errorMessage);
+                }
+            });
+        </script>
+    }
+
+</body>
+</html>

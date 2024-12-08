@@ -1,0 +1,153 @@
+﻿@using GP_MVC.ViewModels
+@model AddStudentGradeVM
+
+@{
+    ViewData["Title"] = "Add Student Grade";
+    Layout = "~/Areas/Teacher/Views/Shared/_Layout.cshtml";
+}
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Add Student Grade</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #FFFFFF;
+            color: #3C3883;
+            margin: 0;
+            padding: 20px;
+        }
+
+        h2 {
+            color: #6C63FF;
+            border-bottom: 2px solid #6C63FF;
+            padding-bottom: 10px;
+        }
+
+        form {
+            background-color: #f9f9f9;
+            padding: 20px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            max-width: 600px;
+            margin: auto;
+        }
+
+        .form-group {
+            margin-bottom: 15px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 5px;
+            color: #3C3883;
+        }
+
+        input[type="text"],
+        input[type="number"],
+        select {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+        }
+
+        button {
+            background-color: #6C63FF;
+            color: #FFFFFF;
+            border: none;
+            padding: 10px 15px;
+            cursor: pointer;
+            border-radius: 5px;
+        }
+
+            button:hover {
+                background-color: #3C3883;
+            }
+
+        .text-danger {
+            color: red;
+            font-size: 0.9em;
+            margin-top: 5px;
+        }
+    </style>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+</head>
+<body>
+
+    <h2>Add Student Grade</h2>
+
+    <form asp-action="AddGrades" method="post">
+        <div asp-validation-summary="All" class="text-danger"></div>
+
+        <div class="form-group">
+            <label for="material">Selected Material</label>
+            <input type="text" id="material" name="MaterialName" class="form-control" value="@Model.Material.Text" readonly />
+            <input type="hidden" name="MaterialId" value="@Model.MaterialId" />
+        </div>
+
+        <div class="form-group">
+            <label for="exam">Select Exam</label>
+            <select id="exam" name="ExamId" class="form-control" asp-for="ExamId" asp-items="ViewBag.exams"></select>
+            <span asp-validation-for="ExamId" class="text-danger"></span>
+        </div>
+
+        <div class="form-group">
+            <label for="examGrade">Exam Grade</label>
+            <input type="text" id="examGrade" name="ExamGrade" class="form-control" value="@Model.SelectedExamGrade" readonly />
+        </div>
+
+        <div class="form-group">
+            <label for="studentGrade">Student Grade</label>
+            <input type="text" id="studentGrade" name="StudentGrade" class="form-control" value="@Model.SelectedStudentGrade" readonly />
+        </div>
+
+        <div class="form-group">
+            <label for="grade">Grade</label>
+            <input type="number" id="grade" name="Student_Grade" class="form-control" asp-for="Student_Grade" />
+            <span asp-validation-for="Student_Grade" class="text-danger"></span>
+        </div>
+
+        <input type="hidden" name="studentGradeId" value="@Model.studentGradeId" />
+        <input type="hidden" name="StudentId" value="@Model.StudentId" />
+
+        <button type="submit">Add Grade</button>
+    </form>
+
+    @if (!string.IsNullOrEmpty(TempData["ErrorMessage"] as string))
+    {
+        <div class="text-danger">
+            @TempData["ErrorMessage"]
+        </div>
+    }
+
+    <script>
+        $(document).ready(function () {
+            $('#exam').change(function () {
+                var examId = $(this).val();
+                var studentId = '@Model.StudentId';
+                if (examId) {
+                    $.ajax({
+                        url: '@Url.Action("GetStudentGradeForExam")',
+                        type: 'GET',
+                        data: { studentId: studentId, examId: examId },
+                        success: function (data) {
+                            if (data.success) {
+                                $('#examGrade').val(data.examGrade);
+                                $('#studentGrade').val(data.studentGrade);
+                            } else {
+                                alert(data.message);
+                            }
+                        }
+                    });
+                } else {
+                    $('#examGrade').val('');
+                    $('#studentGrade').val('');
+                }
+            });
+        });
+    </script>
+
+</body>
+</html>

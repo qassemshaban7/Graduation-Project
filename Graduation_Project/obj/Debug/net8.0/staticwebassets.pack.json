@@ -1,0 +1,53 @@
+{
+  "Files": [
+    {
+      "Id": "C:\\Users\\KING\\Downloads\\Graduation_Project\\Graduation_Project\\wwwroot\\GeneralExams\\34ff4dc0-2db2-40ad-9aa8-ee69188d2fe9_Ben10.jpeg",
+      "PackagePath": "staticwebassets\\GeneralExams\\34ff4dc0-2db2-40ad-9aa8-ee69188d2fe9_Ben10.jpeg"
+    },
+    {
+      "Id": "C:\\Users\\KING\\Downloads\\Graduation_Project\\Graduation_Project\\wwwroot\\GeneralExams\\6376b796-1ca6-4c01-92a2-8cfd5a412f0b_adminphoto.jpg",
+      "PackagePath": "staticwebassets\\GeneralExams\\6376b796-1ca6-4c01-92a2-8cfd5a412f0b_adminphoto.jpg"
+    },
+    {
+      "Id": "C:\\Users\\KING\\Downloads\\Graduation_Project\\Graduation_Project\\wwwroot\\GeneralExams\\b4460e6d-4d07-41f9-a34f-9d143b3c115a_OIP.jpg",
+      "PackagePath": "staticwebassets\\GeneralExams\\b4460e6d-4d07-41f9-a34f-9d143b3c115a_OIP.jpg"
+    },
+    {
+      "Id": "C:\\Users\\KING\\Downloads\\Graduation_Project\\Graduation_Project\\wwwroot\\GeneralExams\\f3a01646-b20b-4a3f-8a15-5db09cca8444_الجوكر.jpg",
+      "PackagePath": "staticwebassets\\GeneralExams\\f3a01646-b20b-4a3f-8a15-5db09cca8444_الجوكر.jpg"
+    },
+    {
+      "Id": "C:\\Users\\KING\\Downloads\\Graduation_Project\\Graduation_Project\\wwwroot\\Images\\003f7527-78ef-4074-a295-499d00da68e3_Ben10.jpeg",
+      "PackagePath": "staticwebassets\\Images\\003f7527-78ef-4074-a295-499d00da68e3_Ben10.jpeg"
+    },
+    {
+      "Id": "C:\\Users\\KING\\Downloads\\Graduation_Project\\Graduation_Project\\wwwroot\\Images\\0cd6d41a-59fc-4bce-8efc-032598d36ffb_html.png",
+      "PackagePath": "staticwebassets\\Images\\0cd6d41a-59fc-4bce-8efc-032598d36ffb_html.png"
+    },
+    {
+      "Id": "C:\\Users\\KING\\Downloads\\Graduation_Project\\Graduation_Project\\wwwroot\\Images\\d0a9578a-9fbc-46db-bc63-87033c9676dd_html.png",
+      "PackagePath": "staticwebassets\\Images\\d0a9578a-9fbc-46db-bc63-87033c9676dd_html.png"
+    },
+    {
+      "Id": "C:\\Users\\KING\\Downloads\\Graduation_Project\\Graduation_Project\\wwwroot\\Images\\manangerphoto.jpg",
+      "PackagePath": "staticwebassets\\Images\\manangerphoto.jpg"
+    },
+    {
+      "Id": "obj\\Debug\\net8.0\\staticwebassets\\msbuild.Graduation_Project.Microsoft.AspNetCore.StaticWebAssets.props",
+      "PackagePath": "build\\Microsoft.AspNetCore.StaticWebAssets.props"
+    },
+    {
+      "Id": "obj\\Debug\\net8.0\\staticwebassets\\msbuild.build.Graduation_Project.props",
+      "PackagePath": "build\\Graduation_Project.props"
+    },
+    {
+      "Id": "obj\\Debug\\net8.0\\staticwebassets\\msbuild.buildMultiTargeting.Graduation_Project.props",
+      "PackagePath": "buildMultiTargeting\\Graduation_Project.props"
+    },
+    {
+      "Id": "obj\\Debug\\net8.0\\staticwebassets\\msbuild.buildTransitive.Graduation_Project.props",
+      "PackagePath": "buildTransitive\\Graduation_Project.props"
+    }
+  ],
+  "ElementsToRemove": []
+}

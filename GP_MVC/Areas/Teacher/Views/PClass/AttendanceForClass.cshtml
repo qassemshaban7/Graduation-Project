@@ -1,0 +1,159 @@
+﻿@model List<Attendence>
+
+@{
+    ViewData["Title"] = "Student Attendance";
+    Layout = "~/Areas/Teacher/Views/Shared/_Layout.cshtml";
+}
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Student Attendance</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #FFFFFF;
+            color: #3C3883;
+            margin: 0;
+            padding: 20px;
+        }
+
+        h2 {
+            color: #6C63FF;
+            border-bottom: 2px solid #6C63FF;
+            padding-bottom: 10px;
+            display: inline-block;
+        }
+
+        .download-button {
+            float: right;
+            margin-top: 10px;
+        }
+
+        .styled-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+            font-size: 18px;
+            text-align: left;
+            background-color: #FFFFFF;
+            border: 1px solid #dddddd;
+        }
+
+            .styled-table thead tr {
+                background-color: #6C63FF;
+                color: #FFFFFF;
+            }
+
+            .styled-table th,
+            .styled-table td {
+                padding: 12px 15px;
+                border: 1px solid #dddddd;
+            }
+
+            .styled-table tbody tr:nth-of-type(even) {
+                background-color: #f3f3f3;
+            }
+
+        .fa-file-alt {
+            margin-right: 5px;
+        }
+
+        .filter-form {
+            margin-top: 20px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+            .filter-form select,
+            .filter-form button {
+                padding: 10px;
+                font-size: 16px;
+            }
+
+            .filter-form button {
+                background-color: #6C63FF;
+                color: #FFFFFF;
+                border: none;
+                cursor: pointer;
+                border-radius: 5px;
+            }
+
+                .filter-form button:hover {
+                    background-color: #3C3883;
+                }
+
+    </style>
+</head>
+<body>
+
+    <h2>Student Attendance</h2>
+
+    @if (TempData["AlertMessage"] != null)
+    {
+        <div class="alert alert-warning">@TempData["AlertMessage"]</div>
+    }
+
+    <a asp-action="ExcelForOneClass" asp-controller="PClass" asp-route-selectedDate="@ViewBag.SelectedDate" asp-route-ClassId="@ViewBag.PClassId" class="btn btn-primary text-white download-button">
+        <i class="fas fa-file-alt"></i> Download report
+    </a>
+
+    <form method="get" class="filter-form">
+        <input type="hidden" name="id" value="@ViewBag.PClassId" />
+        <label for="date-select">Select Date:</label>
+        <select id="date-select" name="selectedDate">
+            <option value="">All Dates</option>
+            @foreach (var date in ViewBag.Dates)
+            {
+                <option value="@date.ToString("yyyy-MM-dd")">@date.ToShortDateString()</option>
+            }
+        </select>
+        <button type="submit">Filter</button>
+    </form>
+
+    <div class="table-container">
+        <table class="styled-table">
+            <thead>
+                <tr>
+                    <th>Student Name</th>
+                    <th>Date Day</th>
+                    <th>Part One</th>
+                    <th>Part Two</th>
+                    <th>Total</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var attendance in Model)
+                {
+                    <tr>
+                        <td>@attendance.ApplicationUser.Name</td>
+                        <td>@attendance.Date_Day.ToShortDateString()</td>
+                        <td>@attendance.PartOne</td>
+                        <td>@attendance.PartTwo</td>
+                        <td>@attendance.Total</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            var selectedDate = "@ViewBag.SelectedDate?.ToString("yyyy-MM-dd")";
+            if (selectedDate) {
+                var selectElement = document.getElementById("date-select");
+                for (var i = 0; i < selectElement.options.length; i++) {
+                    if (selectElement.options[i].value === selectedDate) {
+                        selectElement.options[i].selected = true;
+                        break;
+                    }
+                }
+            }
+        });
+    </script>
+
+</body>
+</html>
+

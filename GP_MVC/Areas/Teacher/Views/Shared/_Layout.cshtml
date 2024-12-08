@@ -1,0 +1,194 @@
+﻿<!DOCTYPE html>
+<html lang="en" dir="ltr" class="ltr">
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Meta -->
+    <meta name="description" content="Ablexa School System">
+    <meta name="author" content="">
+
+    <title>Ablexa School System</title>
+
+    <!-- vendor css -->
+    <link href="~/lib/fontawesome/css/all.min.css" rel="stylesheet">
+
+    <!-- Bracket CSS -->
+    <link rel="stylesheet" href="~/css/bracket.css">
+    <script src="https://cdn.tiny.cloud/1/7c6ary05manxlt32d3zdisgrypyg3tlg03jjvjss6nko71di/tinymce/6/tinymce.min.js" referrerpolicy="origin"></script>
+    @RenderSection("head", false)
+
+    <style>
+        .br-sideleft {
+            float: left;
+            background-color: #3C3883; /* Background color for the left sidebar */
+            color: #FFFFFF; /* Text color for the left sidebar */
+        }
+
+            .br-sideleft .br-menu-link {
+                color: #FFFFFF; /* Text color for menu links in the left sidebar */
+            }
+
+                .br-sideleft .br-menu-link:hover {
+                    background-color: #6C63FF; /* Hover background color for menu links in the left sidebar */
+                }
+
+        .br-mainpanel {
+            margin-left: 250px;
+            background-color: #FFFFFF; /* Background color for the main content area */
+            color: #3C3883; /* Text color for the main content */
+        }
+
+        .br-header {
+            background-color: #3C3883; /* Background color for the top header */
+            color: #FFFFFF; /* Text color for the top header */
+        }
+
+            .br-header .logged-name {
+                color: #FFFFFF; /* Text color for the user name in the top header */
+            }
+
+        .br-header-right .nav-link-profile:hover {
+            background-color: #6C63FF; /* Hover background color for user profile link in the top header */
+        }
+
+        .br-header .dropdown-menu-header {
+            background-color: #3C3883; /* Background color for the dropdown menu in the top header */
+            color: #FFFFFF; /* Text color for the dropdown menu items in the top header */
+        }
+
+            .br-header .dropdown-menu-header .list-unstyled .btn-link {
+                color: #FFFFFF; /* Text color for the links in the dropdown menu in the top header */
+            }
+
+                .br-header .dropdown-menu-header .list-unstyled .btn-link:hover {
+                    color: #6C63FF; /* Hover text color for the links in the dropdown menu in the top header */
+                }
+
+        /* Ensuring the DataTables sort icons display correctly */
+        th.sorting:after,
+        th.sorting_asc:after,
+        th.sorting_desc:after {
+            font-family: 'FontAwesome';
+            padding-left: 10px;
+            opacity: 0.7;
+        }
+
+        th.sorting:after {
+            content: "\f0dc";
+        }
+
+        th.sorting_asc:after {
+            content: "\f0de";
+        }
+
+        th.sorting_desc:after {
+            content: "\f0dd";
+        }
+    </style>
+</head>
+<body>
+
+    <!-- ########## START: LEFT PANEL ########## -->
+    <div class="br-logo d-flex justify-content-center">
+        <a asp-action="Index" asp-controller="Home" asp-area="Teacher">
+            <img src="~/img/lk55.png" class="img-thumbnail" />
+        </a>
+    </div>
+
+    <div class="br-sideleft sideleft-scrollbar">
+        <label class="sidebar-label pd-x-10 mg-t-20 op-3"></label>
+
+        <ul class="br-sideleft-menu">
+            <li class="br-menu-item">
+                <a asp-action="Index" asp-controller="Home" class="br-menu-link">
+                    <i class="menu-item-icon icon fas fa-light fa-house"></i>
+                    <span class="menu-item-label">Home</span>
+                </a><!-- br-menu-link -->
+            </li><!-- br-menu-item -->
+
+            <li class="br-menu-item">
+                <a href="#" class="br-menu-link with-sub">
+                    <i class="menu-item-icon icon fas fa-chalkboard-teacher tx-20"></i>
+                    <span class="menu-item-label">Classes List</span>
+                </a><!-- br-menu-link -->
+                <ul class="br-menu-sub">
+                    <li class="sub-item"><a asp-action="Index" asp-controller="PClass" class="sub-link">View Classes</a></li>
+                </ul>
+            </li>
+            <li class="br-menu-item">
+                <a href="#" class="br-menu-link with-sub">
+                    <i class="menu-item-icon icon fas fa-calendar-alt tx-20"></i>
+                    <span class="menu-item-label">Years List</span>
+                </a><!-- br-menu-link -->
+                <ul class="br-menu-sub">
+                    <li class="sub-item"><a asp-action="Index" asp-controller="Year" class="sub-link">View Years</a></li>
+                </ul>
+            </li>
+        </ul>
+
+        <!-- br-sideleft-menu -->
+        <br>
+    </div><!-- br-sideleft -->
+    <!-- ########## END: LEFT PANEL ########## -->
+    <!-- ########## START: HEAD PANEL ########## -->
+    <div class="br-header" style="background-color: #3C3883;">
+        <div class="br-header-left">
+            <div class="navicon-left hidden-md-down">
+                <a id="btnLeftMenu" href="#"><i class="icon fas fa-light fa-bars"></i></a>
+            </div>
+            <div class="navicon-left hidden-lg-up">
+                <a id="btnLeftMenuMobile" href="#"><i class="icon fas fa-light fa-bars"></i></a>
+            </div>
+        </div><!-- br-header-left -->
+        <div class="br-header-right">
+            <nav class="nav">
+                <div class="dropdown">
+                    <a href="#" class="nav-link nav-link-profile" data-toggle="dropdown">
+                        <span class="logged-name hidden-md-down">@User.Identity.Name</span>
+                        <img src="~/img/avatar.png" class="wd-32 rounded-circle" alt="">
+                        <span class="square-10 bg-success"></span>
+                    </a>
+                    <div class="dropdown-menu dropdown-menu-header wd-250" style="background-color: #3C3883; color: #FFFFFF;">
+                        <div class="tx-center">
+                            <a href="#"><img src="~/img/avatar.png" class="wd-80 rounded-circle" alt=""></a>
+                            <h6 class="logged-fullname" style="color: #FFFFFF;">@User.Identity.Name</h6>
+                            <p style="color: #FFFFFF;">Teacher</p>
+                        </div>
+                        <hr>
+                        <ul class="list-unstyled user-profile-nav">
+                            <li>
+                                <form asp-action="ChangePassword" asp-controller="Home" method="post">
+                                    <i class="fas fa-lock" style="color: #FFFFFF;"></i>
+                                    <button type="submit" class="btn btn-link" style="color: #FFFFFF;">Change Password</button>
+                                </form>
+                            </li>
+                            <li>
+                                <form class="form-inline" asp-area="Identity" asp-page="/Account/Logout">
+                                    <i class="icon fas fa-right-from-bracket" style="color: #FFFFFF;"></i>
+                                    <button type="submit" class="btn btn-link" style="color: #FFFFFF;">Log Out</button>
+                                </form>
+                            </li>
+                        </ul>
+                    </div><!-- dropdown-menu -->
+                </div><!-- dropdown -->
+            </nav>
+        </div><!-- br-header-right -->
+    </div><!-- br-header -->
+    <!-- ########## END: HEAD PANEL ########## -->
+    <!-- ########## START: MAIN PANEL ########## -->
+    <div class="br-mainpanel">
+        @RenderBody()
+    </div><!-- br-mainpanel -->
+    <!-- ########## END: MAIN PANEL ########## -->
+
+    <script src="~/lib/jquery/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <script src="~/lib/perfect-scrollbar/perfect-scrollbar.min.js"></script>
+
+    <script src="~/js/bracket.js"></script>
+    <script src="~/js/dashboard.js"></script>
+    @RenderSection("scripts", false)
+</body>
+</html>

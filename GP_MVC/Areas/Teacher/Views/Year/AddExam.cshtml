@@ -1,0 +1,133 @@
+﻿@model GP_MVC.Models.Exam
+@{
+    ViewData["Title"] = "Add Exam";
+    Layout = "~/Areas/Teacher/Views/Shared/_Layout.cshtml";
+}
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Add Exam</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #FFFFFF;
+            color: #3C3883;
+            margin: 0;
+            padding: 20px;
+        }
+
+        h2 {
+            color: #6C63FF;
+            border-bottom: 2px solid #6C63FF;
+            padding-bottom: 10px;
+        }
+
+        form {
+            background-color: #f9f9f9;
+            padding: 20px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            max-width: 600px;
+            margin: auto;
+        }
+
+        .form-group {
+            margin-bottom: 15px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 5px;
+            color: #3C3883;
+        }
+
+        input[type="text"],
+        input[type="number"],
+        input[type="file"],
+        select {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+        }
+
+        button {
+            background-color: #6C63FF;
+            color: #FFFFFF;
+            border: none;
+            padding: 10px 15px;
+            cursor: pointer;
+            border-radius: 5px;
+        }
+
+            button:hover {
+                background-color: #3C3883;
+            }
+
+        .text-danger {
+            color: red;
+            font-size: 0.9em;
+            margin-top: 5px;
+        }
+    </style>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+</head>
+<body>
+
+    <h2>Add Exam</h2>
+
+    <form method="post" asp-action="AddExam" asp-controller="Year" enctype="multipart/form-data">
+        <input type="hidden" asp-for="Id" />
+        <input type="hidden" asp-for="MaterialId" value="@ViewBag.MaterialId" />
+
+        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+        <div class="form-group">
+            <label for="name">Exam Name</label>
+            <input asp-for="Name" type="text" id="name" name="Name" class="form-control" placeholder="Exam Name" required>
+            <span class="text-danger" asp-validation-for="Name"></span>
+        </div>
+
+        <div class="form-group">
+            <label for="exam-grade">Exam Grade</label>
+            <input asp-for="Exam_Grade" type="number" id="exam-grade" name="Exam_Grade" class="form-control" placeholder="Exam Grade" required>
+            <span class="text-danger" asp-validation-for="Exam_Grade"></span>
+        </div>
+
+        <div class="form-group">
+            <label for="image">Image</label>
+            <input asp-for="Image" type="file" id="image" name="Image" class="form-control" accept=".png,.jpg,.jpeg" required>
+            <span class="text-danger" asp-validation-for="Image"></span>
+        </div>
+
+        <div class="form-group text-center">
+            <button type="submit">Save</button>
+            <a asp-action="ExamIndex" asp-controller="Year" asp-route-id="@ViewBag.MaterialId" class="btn btn-secondary">Back</a>
+        </div>
+    </form>
+
+    @if (!string.IsNullOrEmpty(TempData["ErrorMessage"] as string))
+    {
+        <div class="text-danger">
+            @TempData["ErrorMessage"]
+        </div>
+    }
+
+    <script>
+        $(document).ready(function () {
+            var errorMessage = '@TempData["ErrorMessage"]';
+            if (errorMessage) {
+                alert(errorMessage);
+            }
+        });
+    </script>
+
+</body>
+</html>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}

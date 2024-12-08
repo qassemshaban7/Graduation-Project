@@ -1,0 +1,88 @@
+﻿@model List<Behavior>
+
+@{
+    ViewData["Title"] = "Student Behavior";
+    Layout = "~/Areas/Manager/Views/Shared/_Layout.cshtml";
+}
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Student Behavior</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #FFFFFF;
+            color: #3C3883;
+            margin: 0;
+            padding: 20px;
+        }
+
+        h2 {
+            color: #6C63FF;
+            border-bottom: 2px solid #6C63FF;
+            padding-bottom: 10px;
+            display: inline-block;
+        }
+
+        .download-button {
+            float: right;
+            margin-top: 10px;
+        }
+
+        .styled-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+            font-size: 18px;
+            text-align: left;
+            background-color: #FFFFFF;
+            border: 1px solid #dddddd;
+        }
+
+            .styled-table thead tr {
+                background-color: #6C63FF;
+                color: #FFFFFF;
+            }
+
+            .styled-table th,
+            .styled-table td {
+                padding: 12px 15px;
+                border: 1px solid #dddddd;
+            }
+
+            .styled-table tbody tr:nth-of-type(even) {
+                background-color: #f3f3f3;
+            }
+
+        .fa-file-alt {
+            margin-right: 5px;
+        }
+
+    </style>
+</head>
+<body>
+
+    <div class="table-container">
+        <table class="styled-table">
+            <thead>
+                <tr>
+                    <th>Date Time</th>
+                    <th>Class Name</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var attendance in Model)
+                {
+                    <tr>
+                        <td>@attendance.Time.ToShortDateString()</td>
+                        <td>Graduated_Class</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+
+</body>
+</html>
