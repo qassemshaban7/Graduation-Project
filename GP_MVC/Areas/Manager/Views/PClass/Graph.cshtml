@@ -1,0 +1,147 @@
+﻿@model List<GP_MVC.ViewModels.YearGradeViewModel>
+
+@{
+    ViewData["Title"] = "Student Material Grades Charts";
+    Layout = "~/Areas/Manager/Views/Shared/_Layout.cshtml";
+}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewData["Title"]</title>
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" rel="stylesheet" />
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels"></script>
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+    <style>
+        .chart-container {
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+            flex-wrap: wrap;
+            width: 100%;
+        }
+
+        .term-card {
+            background-color: #f8f9fa;
+            border: 1px solid #e9ecef;
+            border-radius: 0.25rem;
+            padding: 1.5rem;
+            margin-bottom: 1.5rem;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+            width: 100%;
+        }
+
+        canvas {
+            width: 100% !important;
+            height: 500px !important;
+        }
+
+        .alert {
+            margin-top: 1.5rem;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2 class="text-center mb-4">Student Material Grades Analysis</h2>
+        @if (Model == null || !Model.Any())
+        {
+            <div class="alert alert-warning text-center" role="alert">
+                No grades found for this student.
+            </div>
+        }
+        else
+        {
+            <div id="chartsContainer" class="row">
+                @foreach (var year in Model)
+                {
+                    <div class="col-12">
+                        <h4>@year.Year</h4>
+                        @foreach (var term in year.TermGrades)
+                        {
+                            @if (term.MaterialGrades.Any())
+                            {
+                                <div class="term-card">
+                                    <h5 class="text-center">@term.TermName</h5>
+                                    <div class="chart-container">
+                                        <canvas id="bar-chart-@term.TermId"></canvas>
+                                    </div>
+                                </div>
+                            }
+                        }
+                    </div>
+                }
+            </div>
+        }
+    </div>
+
+    <script>
+        $(document).ready(function () {
+        @foreach (var year in Model)
+        {
+            @foreach (var term in year.TermGrades)
+            {
+                if (term.MaterialGrades.Any())
+                {
+                    <text>
+                                        var barCtx = document.getElementById('bar-chart-@term.TermId').getContext('2d');
+                        var labels = [@Html.Raw(string.Join(",", term.MaterialGrades.Select(m => $"'{m.MaterialName}'")))];
+                        var studentGrades = [@Html.Raw(string.Join(",", term.MaterialGrades.Select(m => m.StudentTotalGrade)))];
+                        var materialGrades = [@Html.Raw(string.Join(",", term.MaterialGrades.Select(m => m.MaterialGrade)))];
+
+                        var barChart = new Chart(barCtx, {
+                            type: 'bar',
+                            data: {
+                                labels: labels,
+                                datasets: [
+                                    {
+                                        label: 'Student Total Grade',
+                                        data: studentGrades,
+                                        backgroundColor: 'rgba(0, 0, 139, 0.6)', // Dark Blue
+                                        borderColor: 'rgba(0, 0, 139, 1)',
+                                        borderWidth: 1
+                                    },
+                                    {
+                                        label: 'Material Grade',
+                                        data: materialGrades,
+                                        backgroundColor: 'rgba(0, 100, 0, 0.6)', // Dark Green
+                                        borderColor: 'rgba(0, 100, 0, 1)',
+                                        borderWidth: 1
+                                    }
+                                ]
+                            },
+                            options: {
+                                responsive: true,
+                                maintainAspectRatio: false,
+                                plugins: {
+                                    legend: {
+                                        position: 'top',
+                                    },
+                                    title: {
+                                        display: true,
+                                        text: 'Grades Comparison'
+                                    },
+                                    datalabels: {
+                                        formatter: (value, context) => {
+                                            let maxGrade = context.dataset.label === 'Material Grade' ? 100 : value;
+                                            return maxGrade + "%";
+                                        },
+                                        color: '#fff',
+                                        anchor: 'end',
+                                        align: 'start'
+                                    }
+                                }
+                            },
+                            plugins: [ChartDataLabels]
+                        });
+                    </text>
+                }
+            }
+        }
+                });
+    </script>
+</body>
+</html>

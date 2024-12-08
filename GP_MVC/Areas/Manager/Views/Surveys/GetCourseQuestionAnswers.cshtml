@@ -1,0 +1,176 @@
+﻿@model List<GP_MVC.ViewModels.QuestionWithAnswers>
+
+@{
+    ViewData["Title"] = "Course Question Answers Charts";
+    Layout = "~/Areas/Manager/Views/Shared/_Layout.cshtml";
+}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewData["Title"]</title>
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" rel="stylesheet" />
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels"></script>
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+    <style>
+        .chart-container {
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+
+        .question-card {
+            background-color: #f8f9fa;
+            border: 1px solid #e9ecef;
+            border-radius: 0.25rem;
+            padding: 1.5rem;
+            margin-bottom: 1.5rem;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+        }
+
+        canvas {
+            max-width: 300px;
+            max-height: 300px;
+            margin: auto;
+        }
+
+        .alert {
+            margin-top: 1.5rem;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2 class="text-center mb-4">Analysis of Survey Data</h2>
+        @if (Model == null || !Model.Any())
+        {
+            <div class="alert alert-warning text-center" role="alert">
+                No results found for this survey.
+            </div>
+        }
+        else
+        {
+            <div id="chartsContainer" class="row">
+                @foreach (var question in Model)
+                {
+                    <div class="col-12">
+                        <div class="question-card">
+                            <h5 class="text-center">@Html.Raw(question.QuestionText)</h5>
+                            <div class="chart-container">
+                                <canvas id="pie-chart-@question.QuestionId"></canvas>
+                                <canvas id="bar-chart-@question.QuestionId"></canvas>
+                            </div>
+                        </div>
+                    </div>
+                }
+            </div>
+        }
+    </div>
+
+    <script>
+        $(document).ready(function () {
+        @foreach (var question in Model)
+        {
+            <text>
+                                        var pieCtx = document.getElementById('pie-chart-@question.QuestionId').getContext('2d');
+                var barCtx = document.getElementById('bar-chart-@question.QuestionId').getContext('2d');
+
+                var labels = [@Html.Raw(string.Join(",", question.Answers.Select(a => $"'{a.AnswerText}'")))];
+                var data = [@Html.Raw(string.Join(",", question.Answers.Select(a => a.Count)))];
+                var backgroundColors = [
+                    'rgba(139, 0, 0, 0.6)',    // Dark Red
+                    'rgba(0, 100, 0, 0.6)',    // Dark Green
+                    'rgba(0, 0, 139, 0.6)',    // Dark Blue
+                    'rgba(255, 215, 0, 0.6)',  // Gold
+                    'rgba(255, 69, 0, 0.6)',   // Orange Red
+                    'rgba(72, 61, 139, 0.6)'   // Dark Slate Blue
+                ];
+                var borderColors = [
+                    'rgba(139, 0, 0, 1)',    // Dark Red
+                    'rgba(0, 100, 0, 1)',    // Dark Green
+                    'rgba(0, 0, 139, 1)',    // Dark Blue
+                    'rgba(255, 215, 0, 1)',  // Gold
+                    'rgba(255, 69, 0, 1)',   // Orange Red
+                    'rgba(72, 61, 139, 1)'   // Dark Slate Blue
+                ];
+
+                var pieChart = new Chart(pieCtx, {
+                    type: 'pie',
+                    data: {
+                        labels: labels,
+                        datasets: [{
+                            data: data,
+                            backgroundColor: backgroundColors,
+                            borderColor: borderColors,
+                            borderWidth: 1
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        plugins: {
+                            legend: {
+                                position: 'top',
+                            },
+                            title: {
+                                display: true,
+                            },
+                            datalabels: {
+                                formatter: (value, context) => {
+                                    let sum = context.chart._metasets[0].total;
+                                    let percentage = (value * 100 / sum).toFixed(2) + "%";
+                                    return percentage;
+                                },
+                                color: '#fff',
+                                anchor: 'end',
+                                align: 'start'
+                            }
+                        }
+                    },
+                    plugins: [ChartDataLabels]
+                });
+
+                var barChart = new Chart(barCtx, {
+                    type: 'bar',
+                    data: {
+                        labels: labels,
+                        datasets: [{
+                            data: data,
+                            backgroundColor: backgroundColors,
+                            borderColor: borderColors,
+                            borderWidth: 1
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        plugins: {
+                            legend: {
+                                display: false,
+                            },
+                            title: {
+                                display: true,
+                            }
+                        },
+                        scales: {
+                            x: {
+                                ticks: {
+                                    autoSkip: false,
+                                    maxRotation: 90,
+                                    minRotation: 45
+                                }
+                            },
+                            y: {
+                                beginAtZero: true
+                            }
+                        }
+                    }
+                });
+            </text>
+        }
+                        });
+    </script>
+</body>
+</html>

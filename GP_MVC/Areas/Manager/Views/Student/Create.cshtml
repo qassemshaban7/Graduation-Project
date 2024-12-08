@@ -1,0 +1,114 @@
+﻿@model GP_MVC.ViewModels.AddStudentVM
+@{
+    ViewData["Title"] = "Create Student";
+    Layout = "~/Areas/Manager/Views/Shared/_Layout.cshtml";
+}
+
+<div class="br-pagetitle">
+    <h3 class="text-info mr-3">Add New Student</h3>
+</div><!-- br-pagetitle -->
+
+<div class="br-pagebody">
+    <div class="br-section-wrapper">
+        <div class="row">
+            <div class="col-xl-12">
+                <div class="form-layout form-layout-4">
+                    <form asp-action="Create" asp-controller="Student" id="teacherForm" method="post" enctype="multipart/form-data" onsubmit="return validateForm()">
+                        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+                        <div class="row mb-3">
+                            <label class="col-sm-4 form-control-label">Name: <span class="tx-danger">*</span></label>
+                            <div class="col-sm-8 mg-t-10 mg-sm-t-0">
+                                <input asp-for="Name" type="text" class="form-control" placeholder="Student Name" required>
+                                <span class="text-danger" asp-validation-for="Name"></span>
+                            </div>
+                        </div><!-- row -->
+
+                        <div class="row mb-3">
+                            <label class="col-sm-4 form-control-label">Email: <span class="tx-danger">*</span></label>
+                            <div class="col-sm-8 mg-t-10 mg-sm-t-0">
+                                <input asp-for="Email" type="email" class="form-control" placeholder="Email Address" required>
+                                <span class="text-danger" asp-validation-for="Email"></span>
+                            </div>
+                        </div><!-- row -->
+
+                        <div class="row mb-3">
+                            <label class="col-sm-4 form-control-label">National Number: <span class="tx-danger">*</span></label>
+                            <div class="col-sm-8 mg-t-10 mg-sm-t-0">
+                                <input asp-for="NationalNum" type="number" class="form-control" placeholder="National Number" required>
+                                <span class="text-danger" asp-validation-for="NationalNum"></span>
+                            </div>
+                        </div><!-- row -->
+
+                        <div class="row mb-3">
+                            <label class="col-sm-4 form-control-label">Year: <span class="tx-danger">*</span></label>
+                            <div class="col-sm-8 mg-t-10 mg-sm-t-0">
+                                <select asp-for="YearId" class="form-control" asp-items="@((SelectList)ViewData["Years"])">
+                                    <option value="">-- Select Year --</option>
+                                </select>
+                                <span class="text-danger" asp-validation-for="YearId"></span>
+                            </div>
+                        </div><!-- row -->
+
+                        <div class="row mb-3">
+                            <label class="col-sm-4 form-control-label">Class: <span class="tx-danger">*</span></label>
+                            <div class="col-sm-8 mg-t-10 mg-sm-t-0">
+                                <select asp-for="PClassId" class="form-control" asp-items="@((SelectList)ViewData["PClasses"])">
+                                    <option value="">-- Select Class --</option>
+                                </select>
+                                <span class="text-danger" asp-validation-for="PClassId"></span>
+                            </div>
+                        </div><!-- row -->
+
+                        <div class="row mb-3">
+                            <label class="col-sm-4 form-control-label">Image: <span class="tx-danger">*</span></label>
+                            <div class="col-sm-8 mg-t-10 mg-sm-t-0">
+                                <input asp-for="Image" type="file" class="form-control-file">
+                                <span class="text-danger" asp-validation-for="Image"></span>
+                            </div>
+                        </div><!-- row -->
+
+                        <div class="form-layout-footer mg-t-30 text-center">
+                            <input type="submit" value="Add" class="btn btn-info">
+                            <a asp-action="Index" asp-controller="Student" class="btn btn-secondary">Back</a>
+                        </div><!-- form-layout-footer -->
+                    </form>
+                </div><!-- form-layout -->
+            </div>
+        </div><!-- row -->
+    </div><!-- br-section-wrapper -->
+</div><!-- br-pagebody -->
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+    <script>
+        function validateForm() {
+            var year = document.querySelector('select[name="YearId"]').value;
+            var pclass = document.querySelector('select[name="PClassId"]').value;
+            var image = document.querySelector('input[name="Image"]').value;
+
+            if (!year) {
+                alert('Year is required');
+                return false;
+            }
+            if (!pclass) {
+                alert('Class is required');
+                return false;
+            }
+            if (!image) {
+                alert('Image is required');
+                return false;
+            }
+            return true;
+        }
+
+        // Function to display TempData error messages as alert
+        window.onload = function () {
+            var errorMessage = '@TempData["ErrorMessage"]';
+            if (errorMessage) {
+                alert(errorMessage);
+            }
+        }
+    </script>
+}

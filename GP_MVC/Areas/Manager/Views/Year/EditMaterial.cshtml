@@ -1,0 +1,60 @@
+﻿@model GP_MVC.Models.Material
+@{
+    ViewData["Title"] = "Edit Material";
+    Layout = "~/Areas/Manager/Views/Shared/_Layout.cshtml";
+}
+
+<div class="br-pagetitle">
+    <h3 class="text-info mr-3">Edit Material</h3>
+</div>
+
+<div class="br-pagebody">
+    <div class="br-section-wrapper">
+        <div class="row">
+            <div class="col-xl-12">
+                <div class="form-layout form-layout-4">
+                    <form method="post" asp-action="EditMaterial" asp-controller="Year" asp-route-returnurl="@ViewData["ReturnUrl"]">
+                        <input type="hidden" asp-for="Id" />
+                        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+                        <div class="row mb-3">
+                            <label class="col-sm-4 form-control-label">Material Name: <span class="tx-danger">*</span></label>
+                            <div class="col-sm-8 mg-t-10 mg-sm-t-0">
+                                <input asp-for="Name" type="text" class="form-control" placeholder="Material Name" required>
+                                <span class="text-danger" asp-validation-for="Name"></span>
+                            </div>
+                        </div>
+
+                        <div class="row mb-3">
+                            <label class="col-sm-4 form-control-label">Material Grade: <span class="tx-danger">*</span></label>
+                            <div class="col-sm-8 mg-t-10 mg-sm-t-0">
+                                <input asp-for="M_grade" type="number" class="form-control" placeholder="Material Grade" required>
+                                <span class="text-danger" asp-validation-for="M_grade"></span>
+                            </div>
+                        </div>
+
+                        <div class="form-layout-footer mg-t-30 text-center">
+                            <input type="submit" value="Save" class="btn btn-info">
+                            <a asp-action="MaterialIndex" asp-controller="Year" asp-route-id="@ViewBag.TermId" class="btn btn-secondary">Back</a>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+
+    <script>
+        $(document).ready(function () {
+            var errorMessage = '@TempData["ErrorMessage"]';
+            if (errorMessage) {
+                alert(errorMessage);
+            }
+        });
+    </script>
+}

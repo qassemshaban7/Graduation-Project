@@ -1,0 +1,148 @@
+﻿@page
+@model GP_MVC.Areas.Identity.Pages.Account.LoginModel
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Meta -->
+    <meta name="description" content="Archiving System">
+    <meta name="author" content="Ehab">
+
+    <title>Ablexa School System</title>
+
+    <!-- Vendor CSS -->
+    <link href="~/lib/%40fortawesome/fontawesome-free/css/all.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
+    <link href="~/lib/rickshaw/rickshaw.min.css" rel="stylesheet">
+
+    <!-- Bracket CSS -->
+    <link rel="stylesheet" href="~/css/bracket.css">
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #FFFFFF;
+            color: #3C3883;
+            margin: 0;
+            padding: 20px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        .login-wrapper {
+            background-color: #FFFFFF;
+            border-radius: 10px;
+            padding: 20px;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+            width: 350px; /* Adjust as needed */
+            text-align: center;
+        }
+
+        .signin-logo {
+            margin-bottom: 20px;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        input[type="text"],
+        input[type="password"] {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-size: 16px;
+        }
+
+        .form-check-input {
+            margin-right: 10px;
+        }
+
+        .tx-center {
+            text-align: center;
+        }
+
+        .btn-primary {
+            background-color: #6C63FF;
+            color: #FFFFFF;
+            border: none;
+            padding: 15px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 18px;
+        }
+
+            .btn-primary:hover {
+                background-color: #3C3883;
+            }
+
+        .tx-white {
+            color: #FFFFFF;
+        }
+
+        .tx-28 {
+            font-size: 28px;
+        }
+
+        /* Custom Styles */
+        .remember-me {
+            text-align: right;
+            margin-top: -10px; /* Adjust as needed */
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="login-wrapper">
+        <div class="d-flex justify-content-center mb-2">
+            <img src="~/img/lolo.png" class="img-thumbnail" />
+        </div>
+
+        <h3 class="tx-center">Login</h3>
+        <p class="tx-center mb-4">Welcome to Miss Ablexa System</p>
+
+        <form class="text-left" id="account" method="post">
+            <div class="form-group">
+                <input asp-for="Input.Email" class="form-control" autocomplete="Email" aria-required="true" placeholder="Username" required />
+                <span asp-validation-for="Input.Email" class="text-danger"></span>
+            </div><!-- form-group -->
+            <div class="form-group">
+                <input asp-for="Input.Password" class="form-control" autocomplete="current-password" aria-required="true" placeholder="Password" required />
+                <span asp-validation-for="Input.Password" class="text-danger"></span>
+            </div><!-- form-group -->
+
+            <div class="form-group remember-me">
+                <label asp-for="Input.RememberMe" class="form-check-label">
+                    <input class="form-check-input" asp-for="Input.RememberMe" />
+                    @Html.DisplayNameFor(m => m.Input.RememberMe)
+                </label>
+            </div>
+            <div asp-validation-summary="ModelOnly" class="text-danger mb-3" role="alert"></div>
+            <button id="login-submit" type="submit" class="w-100 btn btn-lg btn-primary">Login</button>
+        </form>
+    </div><!-- login-wrapper -->
+
+    <script src="~/lib/jquery/jquery.min.js"></script>
+    <script src="~/lib/jquery-ui/ui/widgets/datepicker.js"></script>
+    <script src="~/lib/bootstrap/js/bootstrap.bundle.min.js"></script>
+
+    <!-- END PAGE LEVEL SCRIPTS -->
+</body>
+
+</html>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

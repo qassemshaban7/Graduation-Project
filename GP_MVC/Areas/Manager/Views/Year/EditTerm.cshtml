@@ -1,0 +1,68 @@
+﻿@model GP_MVC.Models.Term
+@{
+    ViewData["Title"] = "Edit Term";
+    Layout = "~/Areas/Manager/Views/Shared/_Layout.cshtml";
+}
+
+<div class="br-pagetitle">
+    <h3 class="text-info mr-3">Edit Term</h3>
+</div>
+
+<div class="br-pagebody">
+    <div class="br-section-wrapper">
+        <div class="row">
+            <div class="col-xl-12">
+                <div class="form-layout form-layout-4">
+                    <form method="post" asp-action="EditTerm" asp-controller="Year" asp-route-returnurl="@ViewData["ReturnUrl"]">
+                        <input type="hidden" asp-for="Id" />
+                        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+                        <div class="row mb-3">
+                            <label class="col-sm-4 form-control-label">Term Name: <span class="tx-danger">*</span></label>
+                            <div class="col-sm-8 mg-t-10 mg-sm-t-0">
+                                <input asp-for="TermName" type="text" class="form-control" placeholder="Term Name" required>
+                                <span class="text-danger" asp-validation-for="TermName"></span>
+                            </div>
+                        </div>
+
+                        <div class="row mb-3">
+                            <label class="col-sm-4 form-control-label">Term Index: <span class="tx-danger">*</span></label>
+                            <div class="col-sm-8 mg-t-10 mg-sm-t-0">
+                                <input asp-for="Index" type="number" class="form-control" placeholder="Term Index" required>
+                                <span class="text-danger" asp-validation-for="Index"></span>
+                            </div>
+                        </div>
+
+                        <div class="row mb-3">
+                            <label class="col-sm-4 form-control-label">End Date: <span class="tx-danger">*</span></label>
+                            <div class="col-sm-8 mg-t-10 mg-sm-t-0">
+                                <input asp-for="EndDate" type="date" class="form-control" required>
+                                <span class="text-danger" asp-validation-for="EndDate"></span>
+                            </div>
+                        </div>
+
+                        <div class="form-layout-footer mg-t-30 text-center">
+                            <input type="submit" value="Save" class="btn btn-info">
+                            <a asp-action="TermIndex" asp-controller="Year" asp-route-id="@ViewBag.YearId" class="btn btn-secondary">Back</a>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+
+    <script>
+        $(document).ready(function () {
+            var errorMessage = '@TempData["ErrorMessage"]';
+            if (errorMessage) {
+                alert(errorMessage);
+            }
+        });
+    </script>
+}

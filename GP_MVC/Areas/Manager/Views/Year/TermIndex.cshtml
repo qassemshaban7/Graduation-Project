@@ -1,0 +1,225 @@
+﻿@model IEnumerable<Term>
+
+@{
+    ViewData["Title"] = "Semester List";
+    Layout = "~/Areas/Manager/Views/Shared/_Layout.cshtml";
+}
+
+@section head {
+    <!-- BEGIN PAGE LEVEL STYLES -->
+    <link rel="stylesheet" type="text/css" href="~/lib/table/datatable/datatables.css">
+    <link rel="stylesheet" type="text/css" href="~/lib/table/datatable/dt-global_style.css">
+    <style>
+        body {
+            direction: ltr;
+        }
+
+        .dataTables_wrapper .dataTables_filter input {
+            margin-left: 10px;
+            width: 150px; /* Reduced width of the search input */
+        }
+
+        .dataTables_wrapper .dataTables_paginate .paginate_button {
+            margin-left: 3px; /* Reduced margin between pagination buttons */
+        }
+
+        th.sorting::after, th.sorting_asc::after, th.sorting_desc::after {
+            position: relative;
+            float: right;
+            margin-top: -18px;
+            margin-right: -8px;
+        }
+
+        th.sorting, th.sorting_asc, th.sorting_desc {
+            padding-right: 10px; /* Adjusted padding for table headers */
+        }
+
+        table.dataTable {
+            width: auto; /* Allow table to adjust width automatically */
+            margin: 0 auto; /* Center the table */
+        }
+
+        .br-pagetitle {
+            margin-bottom: 20px; /* Reduced margin between page title and table */
+        }
+
+        .br-section-wrapper {
+            padding: 20px; /* Adjusted padding for section wrapper */
+        }
+    </style>
+    <!-- END PAGE LEVEL STYLES -->
+}
+
+<div class="br-pagetitle">
+    <i class="fas fa-calendar-alt fa-6x text-info"></i>
+    <div class="row">
+        <div class="col-lg-10 col-10">
+            <h3 class="text-info">Semester List</h3>
+        </div>
+@*         <div class="col-lg-2 col-7 mb-2">
+            <a asp-action="Create" asp-controller="Term" class="btn btn-success">
+                <i class="fas fa-plus"></i> Add Year
+            </a>
+        </div> *@
+    </div>
+</div>
+
+<div class="br-pagebody">
+    <div class="br-section-wrapper">
+        <div class="table-wrapper">
+            <table id="yearsTable" class="table display responsive nowrap">
+                <thead>
+                    <tr>
+                        <th>Name</th>
+                        <th>Index</th>
+                        <th>EndDate</th>
+                        <th>Year</th>
+                        <th>Materials</th>
+                        <th>Edit</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model)
+                    {
+                        <tr>
+                            <td>@item.TermName</td>
+                            <td>@item.Index</td>
+                            <td>@item.EndDate</td>
+                            <td>@item.Year.Name</td>
+                            <td>
+                                <a asp-action="MaterialIndex" asp-controller="Year" asp-route-id="@item.Id" class="btn btn-primary text-white">
+                                    <i class="fas fa-eye"></i> View
+                                </a>
+                            </td>
+                            <td>
+                                <a asp-action="EditTerm" asp-controller="Year" asp-route-id="@item.Id" class="btn btn-primary text-white">
+                                    <i class="fas fa-edit"></i>
+                                </a>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+<input type="hidden" id="created" data-value="@ViewBag.created" />
+<input type="hidden" id="updated" data-value="@ViewBag.updated" />
+<input type="hidden" id="deleted" data-value="@ViewBag.deleted" />
+
+@section scripts {
+    <!-- BEGIN PAGE LEVEL SCRIPTS -->
+    <script src="~/lib/table/datatable/datatables.js"></script>
+    <script>
+        $('#yearsTable').DataTable({
+            "ordering": false,
+            "language": {
+                "emptyTable": "No data available",
+                "info": "Showing _START_ to _END_ of _TOTAL_ entries",
+                "infoEmpty": "Showing 0 to 0 of 0 entries",
+                "lengthMenu": "Show _MENU_ entries",
+                "loadingRecords": "Loading...",
+                "processing": "Processing...",
+                "search": "Search:",
+                "zeroRecords": "No matching records found",
+                "paginate": {
+                    "first": "First",
+                    "last": "Last",
+                    "next": "Next",
+                    "previous": "Previous"
+                }
+            },
+            "oLanguage": {
+                "oPaginate": {
+                    "sPrevious": '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-arrow-left"><line x1="19" y1="12" x2="5" y2="12"></line><polyline points="12 19 5 12 12 5"></polyline></svg>',
+                    "sNext": '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-arrow-right"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>'
+                },
+                "sInfo": "Total results _TOTAL_",
+                "sSearch": '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-search"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>',
+                "sSearchPlaceholder": "Search...",
+                "sLengthMenu": "Results : _MENU_",
+            },
+            "stripeClasses": [],
+            "lengthMenu": [7, 10, 20, 50],
+            "pageLength": 20,
+            drawCallback: function () {
+                $('.dataTables_paginate > .pagination').addClass('pagination-style-13 pagination-bordered mb-5');
+            }
+        });
+    </script>
+    <link href="~/lib/toaster/toaster.css" rel="stylesheet" />
+    <script src="~/lib/toaster/toaster.js"></script>
+
+    <script type="text/javascript">
+        $(document).ready(function () {
+            var created = $("#created").data("value");
+            if (created == "True") {
+                toastr.options = {
+                    "closeButton": false,
+                    "debug": false,
+                    "newestOnTop": false,
+                    "progressBar": true,
+                    "positionClass": "toast-top-right",
+                    "preventDuplicates": true,
+                    "onclick": null,
+                    "showDuration": "300",
+                    "hideDuration": "1000",
+                    "timeOut": "12000",
+                    "extendedTimeOut": "1000",
+                    "showEasing": "swing",
+                    "hideEasing": "linear",
+                    "showMethod": "fadeIn",
+                    "hideMethod": "fadeOut"
+                }
+                toastr.success("Year added successfully");
+            }
+
+            var updated = $("#updated").data("value");
+            if (updated == "True") {
+                toastr.options = {
+                    "closeButton": false,
+                    "debug": false,
+                    "newestOnTop": false,
+                    "progressBar": true,
+                    "positionClass": "toast-top-right",
+                    "preventDuplicates": true,
+                    "onclick": null,
+                    "showDuration": "300",
+                    "hideDuration": "1000",
+                    "timeOut": "12000",
+                    "extendedTimeOut": "1000",
+                    "showEasing": "swing",
+                    "hideEasing": "linear",
+                    "showMethod": "fadeIn",
+                    "hideMethod": "fadeOut"
+                }
+                toastr.success("Term updated successfully");
+            }
+
+            var deleted = $("#deleted").data("value");
+            if (deleted == "True") {
+                toastr.options = {
+                    "closeButton": false,
+                    "debug": false,
+                    "newestOnTop": false,
+                    "progressBar": true,
+                    "positionClass": "toast-top-right",
+                    "preventDuplicates": true,
+                    "onclick": null,
+                    "showDuration": "300",
+                    "hideDuration": "1000",
+                    "timeOut": "12000",
+                    "extendedTimeOut": "1000",
+                    "showEasing": "swing",
+                    "hideEasing": "linear",
+                    "showMethod": "fadeIn",
+                    "hideMethod": "fadeOut"
+                }
+                toastr.success("Year deleted successfully");
+            }
+        });
+    </script>
+    <!-- END PAGE LEVEL SCRIPTS -->
+}
+

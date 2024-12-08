@@ -1,0 +1,65 @@
+﻿@model IEnumerable<Question>
+@{
+    ViewData["Title"] = "Survey";
+    Layout = "~/Areas/Student/Views/Shared/_Layout.cshtml";
+    var surveyId = ViewBag.SurveyId;
+}
+
+<div class="br-pagetitle">
+    <h3 class="text-info mr-3"> Fill out the Survey  (@ViewBag.courseName)  </h3>
+</div>
+
+<div class="br-pagebody">
+    <div class="br-section-wrapper">
+        @if (Model.Any())
+        {
+            <form method="post" asp-action="TakeCourseSurveyServices" asp-controller="Home">
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                @* Use a for loop to iterate through the Model *@
+                @for (var i = 0; i < Model.Count(); i++)
+                {
+                    var item = Model.ElementAt(i);
+                    <div class="row">
+                        <label class="text-dark font-weight-bold"> @item.QuestionText:</label>
+                    </div>
+                    <div class="row">
+                        <div class="col">
+                            <input type="radio" name="surveyResults[@i].SelectedAnswer" value="@item.FirstAnswer" class="form-control-radio" required />
+                            <label class="form-control-label"> @item.FirstAnswer</label>
+                        </div>
+                        <div class="col">
+                            <input type="radio" name="surveyResults[@i].SelectedAnswer" value="@item.SecondAnswer" class="form-control-radio" required />
+                            <label class="form-control-label"> @item.SecondAnswer</label>
+                        </div>
+                        <div class="col">
+                            <input type="radio" name="surveyResults[@i].SelectedAnswer" value="@item.ThirdAnswer" class="form-control-radio" required />
+                            <label class="form-control-label"> @item.ThirdAnswer</label>
+                        </div>
+                        <div class="col">
+                            <input type="radio" name="surveyResults[@i].SelectedAnswer" value="@item.FourthAnswer" class="form-control-radio" required />
+                            <label class="form-control-label"> @item.FourthAnswer</label>
+                        </div>
+                        <input type="hidden" name="surveyResults[@i].QuestionId" value="@item.Id" />
+                    </div>
+                }
+                <input type="hidden" name="surveyId" value="@surveyId" />
+                <div class="form-layout-footer mg-t-30 text-center">
+                    <input type="submit" value="Send" class="btn btn-info">
+                    <a asp-action="Service" class="btn btn-secondary">Back</a>
+                </div>
+            </form>
+        }
+    </div>
+</div>
+
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+    <script type="text/javascript">
+
+    </script>
+}

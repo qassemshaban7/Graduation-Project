@@ -1,0 +1,129 @@
+﻿@using GP_MVC.ViewModels
+@model List<YearGradeViewModel>
+
+@{
+    ViewData["Title"] = "Student Material Grades";
+    Layout = "~/Areas/Teacher/Views/Shared/_Layout.cshtml";
+}
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Student Material Grades</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #FFFFFF;
+            color: #3C3883;
+            margin: 0;
+            padding: 20px;
+        }
+
+        h2 {
+            color: #6C63FF;
+            border-bottom: 2px solid #6C63FF;
+            padding-bottom: 10px;
+        }
+
+        .year-container {
+            margin-bottom: 40px;
+            padding-bottom: 20px;
+            border-bottom: 2px dashed #6C63FF;
+        }
+
+        .term-container {
+            margin-bottom: 20px;
+        }
+
+        .styled-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 25px 0;
+            font-size: 18px;
+            text-align: left;
+            background-color: #FFFFFF;
+        }
+
+            .styled-table thead tr {
+                background-color: #6C63FF;
+                color: #FFFFFF;
+            }
+
+            .styled-table th,
+            .styled-table td {
+                padding: 12px 15px;
+            }
+
+            .styled-table tbody tr {
+                border-bottom: 1px solid #dddddd;
+            }
+
+                .styled-table tbody tr:nth-of-type(even) {
+                    background-color: #f3f3f3;
+                }
+
+                .styled-table tbody tr:last-of-type {
+                    border-bottom: 2px solid #6C63FF;
+                }
+
+        .term-container h3 {
+            color: #3C3883;
+            margin-bottom: 10px;
+        }
+
+        .table-container {
+            margin-bottom: 20px;
+        }
+
+    </style>
+</head>
+<body>
+
+    <h2>Student Material Grades</h2>
+
+    @foreach (var year in Model)
+    {
+        <div class="year-container">
+            <h2>@year.Year Year</h2>
+            @foreach (var term in year.TermGrades)
+            {
+                @if (term.MaterialGrades != null && term.MaterialGrades.Any())
+                {
+                    <div class="term-container">
+                        <h3>@term.TermName</h3>
+                        <div class="table-container">
+                            <table class="styled-table">
+                                <thead>
+                                    <tr>
+                                        <th>Material Name</th>
+                                        <th>Material Grade</th>
+                                        <th>Student Total Grade</th>
+                                        <th>Student Grade Details </th>
+                                        
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach (var materialGrade in term.MaterialGrades)
+                                    {
+                                        <tr>
+                                            <td>@materialGrade.MaterialName</td>
+                                            <td>@materialGrade.MaterialGrade</td>
+                                            <td>@materialGrade.StudentTotalGrade</td>
+                                            <td>
+                                                <a asp-action="GetStudentGradesDetails" asp-controller="PClass" asp-route-studentId="@ViewBag.id" asp-route-materialId="@materialGrade.MaterialId" class="btn btn-primary text-white">
+                                                    <i class="fas fa-eye"></i> View Details
+                                                </a>
+                                            </td>
+                                        </tr>
+                                    }
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                }
+            }
+        </div>
+    }
+
+</body>
+</html>

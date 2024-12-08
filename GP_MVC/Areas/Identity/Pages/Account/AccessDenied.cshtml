@@ -1,0 +1,57 @@
+﻿@page
+@model AccessDeniedModel
+@{
+    ViewData["Title"] = "Access denied";
+    Layout = null;
+}
+
+<!DOCTYPE html>
+<html lang="en" dir="rtl" class="rtl">
+
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Meta -->
+    <meta name="description" content="Archieving System">
+    <meta name="author" content="Ehab">
+
+    <title>نظام ادارة بسطتهالك</title>
+
+    <!-- vendor css -->
+    <link href="~/lib/%40fortawesome/fontawesome-free/css/all.min.css" rel="stylesheet">
+    @*<link href="~/lib/ionicons/css/ionicons.min.css" rel="stylesheet">*@
+    <link rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
+    <link href="~/lib/rickshaw/rickshaw.min.css" rel="stylesheet">
+
+    <!-- Bracket CSS -->
+    <link rel="stylesheet" href="~/css/bracket.css">
+</head>
+
+<body>
+
+    <div class="row no-gutters flex-row-reverse ht-100v">
+        <div class="col-md-6 bg-br-primary d-flex align-items-center justify-content-center">
+
+            <a asp-area="Identity" asp-page="Account/Login" class="btn btn-danger">الرجوع</a>
+        </div>
+        <div class="col-md-6 bg-br-primary d-flex align-items-center justify-content-center">
+            <div class="signin-logo tx-28 tx-bold tx-white"><span class="text-danger">ليس لديك صلاحية الوصول لهذه الصفحة</span></div>
+            
+        </div>
+
+    </div><!-- row -->
+    
+
+    <script src="~/lib/jquery/jquery.min.js"></script>
+    <script src="~/lib/jquery-ui/ui/widgets/datepicker.js"></script>
+    <script src="~/lib/bootstrap/js/bootstrap.bundle.min.js"></script>
+
+    <!-- END PAGE LEVEL SCRIPTS -->
+</body>
+
+</html>
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

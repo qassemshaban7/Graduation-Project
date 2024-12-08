@@ -1,0 +1,140 @@
+﻿@using GP_MVC.ViewModels
+@model List<StudentGradesDetailsViewModel>
+
+@{
+    ViewData["Title"] = "Student Material Grades";
+    Layout = "~/Areas/Teacher/Views/Shared/_Layout.cshtml";
+}
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Student Material Grades</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" />
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #FFFFFF;
+            color: #3C3883;
+            margin: 0;
+            padding: 20px;
+        }
+
+        h2 {
+            color: #6C63FF;
+            border-bottom: 2px solid #6C63FF;
+            padding-bottom: 10px;
+        }
+
+        .year-container {
+            margin-bottom: 40px;
+            padding-bottom: 20px;
+            border-bottom: 2px dashed #6C63FF;
+        }
+
+        .term-container {
+            margin-bottom: 20px;
+        }
+
+        .styled-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 25px 0;
+            font-size: 18px;
+            text-align: left;
+            background-color: #FFFFFF;
+        }
+
+            .styled-table thead tr {
+                background-color: #6C63FF;
+                color: #FFFFFF;
+            }
+
+            .styled-table th,
+            .styled-table td {
+                padding: 12px 15px;
+            }
+
+            .styled-table tbody tr {
+                border-bottom: 1px solid #dddddd;
+            }
+
+                .styled-table tbody tr:nth-of-type(even) {
+                    background-color: #f3f3f3;
+                }
+
+                .styled-table tbody tr:last-of-type {
+                    border-bottom: 2px solid #6C63FF;
+                }
+
+        .term-container h3 {
+            color: #3C3883;
+            margin-bottom: 10px;
+        }
+
+        .table-container {
+            margin-bottom: 20px;
+        }
+
+        .btn-details {
+            background-color: #6C63FF;
+            color: #FFFFFF;
+            border: none;
+            padding: 8px 12px;
+            border-radius: 5px;
+            text-decoration: none;
+            display: inline-block;
+            text-align: center;
+            transition: background-color 0.3s ease;
+        }
+
+            .btn-details:hover {
+                background-color: #3C3883;
+            }
+    </style>
+</head>
+<body>
+
+    <h2>Student Material Grades</h2>
+
+    @foreach (var item in Model)
+    {
+        <div class="year-container">
+            <h2>@item.MaterialName</h2>
+            <div class="table-container">
+                <table class="styled-table">
+                    <thead>
+                        <tr>
+                            <th>Material Name</th>
+                            <th>Material Grade</th>
+                            <th>Student Total Grade</th>
+                            <th>Student Grade Details</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>@item.MaterialName</td>
+                            <td>@item.MaterialGrade</td>
+                            <td>@item.StudentTotalGrade</td>
+                            <td>
+                                @foreach (var exam in item.Exams)
+                                {
+                                    <div>
+                                        <strong>Exam Name:</strong> @exam.ExamName <br />
+                                        <strong>Exam Grade:</strong> @exam.ExamGrade <br />
+                                        <strong>Student Exam Grade:</strong> @exam.StudentExamGrade <br />
+                                        <a class="image-receipt" href="@exam.GeneralExamImage">
+                                            <img src="@exam.GeneralExamImage" alt="Exam Photo" width="50" height="50" />
+                                        </a> <br /><br />
+                                    </div>
+                                }
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    }
+
+</body>
+</html>

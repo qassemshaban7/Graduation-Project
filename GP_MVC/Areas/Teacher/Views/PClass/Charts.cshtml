@@ -1,0 +1,81 @@
+﻿@model List<Attendence>
+
+@{
+    ViewData["Title"] = "Student Attendance";
+    Layout = "~/Areas/Teacher/Views/Shared/_Layout.cshtml";
+}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewData["Title"]</title>
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" rel="stylesheet" />
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+    <style>
+        .chart-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            width: 100%;
+            margin-top: 20px;
+        }
+
+        canvas {
+            max-width: 600px;
+            width: 100% !important;
+            height: 400px !important;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2 class="text-center mb-4">@ViewBag.Stu.Name</h2>
+
+        <div class="chart-container">
+            <canvas id="attendanceChart"></canvas>
+        </div>
+    </div>
+
+    <script>
+        $(document).ready(function () {
+            var dates = [@Html.Raw(string.Join(",", Model.Select(a => $"\"{a.Date_Day.ToShortDateString()}\"")))];
+            var statuses = [@Html.Raw(string.Join(",", Model.Select(a => a.Total == 2 ? "\"Present\"" : "\"Absent\"")))];
+
+            var presentCount = statuses.filter(status => status === "Present").length;
+            var absentCount = statuses.filter(status => status === "Absent").length;
+
+            var ctx = document.getElementById('attendanceChart').getContext('2d');
+            var attendanceChart = new Chart(ctx, {
+                type: 'pie',
+                data: {
+                    labels: ['Present', 'Absent'],
+                    datasets: [{
+                        label: 'Attendance Status',
+                        data: [presentCount, absentCount],
+                        backgroundColor: ['rgba(54, 162, 235, 0.6)', 'rgba(255, 99, 132, 0.6)'], // Blue and Red
+                        borderColor: ['rgba(54, 162, 235, 1)', 'rgba(255, 99, 132, 1)'],
+                        borderWidth: 1
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: {
+                            position: 'top',
+                        },
+                        title: {
+                            display: true,
+                            text: 'Attendance Status'
+                        }
+                    }
+                }
+            });
+        });
+    </script>
+
+</body>
+</html>

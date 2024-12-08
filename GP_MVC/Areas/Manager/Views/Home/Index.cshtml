@@ -1,0 +1,249 @@
+﻿@model GP_MVC.ViewModels.SuperAdminHomeVM
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Areas/Manager/Views/Shared/_Layout.cshtml";
+}
+
+<style>
+    .br-pagebody {
+        background-color: #FFFFFF;
+        padding: 20px;
+    }
+
+    .row-sm {
+        display: flex;
+        flex-wrap: wrap;
+        margin-right: -15px;
+        margin-left: -15px;
+    }
+
+    .col-sm-4,
+    .col-xl-4 {
+        position: relative;
+        width: 100%;
+        padding-right: 15px;
+        padding-left: 15px;
+        margin-bottom: 30px;
+    }
+
+    .bg-info {
+        background-color: #6C63FF !important;
+    }
+
+    .rounded {
+        border-radius: .25rem !important;
+    }
+
+    .overflow-hidden {
+        overflow: hidden !important;
+    }
+
+    .pd-x-20 {
+        padding-left: 20px !important;
+        padding-right: 20px !important;
+    }
+
+    .pd-t-20 {
+        padding-top: 20px !important;
+    }
+
+    .d-flex {
+        display: flex !important;
+    }
+
+    .align-items-center {
+        align-items: center !important;
+    }
+
+    .tx-60 {
+        font-size: 60px !important;
+    }
+
+    .lh-0 {
+        line-height: 0 !important;
+    }
+
+    .tx-white {
+        color: #FFFFFF !important;
+    }
+
+    .op-7 {
+        opacity: .7 !important;
+    }
+
+    .mg-r-20 {
+        margin-right: 20px !important;
+    }
+
+    .text-center {
+        text-align: center !important;
+    }
+
+    .tx-20 {
+        font-size: 20px !important;
+    }
+
+    .tx-spacing-1 {
+        letter-spacing: 1px !important;
+    }
+
+    .tx-mont {
+        font-family: 'Montserrat', sans-serif !important;
+    }
+
+    .tx-bold {
+        font-weight: 700 !important;
+    }
+
+    .tx-uppercase {
+        text-transform: uppercase !important;
+    }
+
+    .tx-white-8 {
+        color: rgba(255, 255, 255, .8) !important;
+    }
+
+    .mg-b-10 {
+        margin-bottom: 10px !important;
+    }
+
+    .tx-24 {
+        font-size: 24px !important;
+    }
+
+    .tx-lato {
+        font-family: 'Lato', sans-serif !important;
+    }
+
+    .mg-b-0 {
+        margin-bottom: 0 !important;
+    }
+
+    .lh-1 {
+        line-height: 1 !important;
+    }
+
+    .ht-50 {
+        height: 50px !important;
+    }
+
+    .tr-y-1 {
+        transition: transform .1s ease-in-out;
+    }
+
+    .fa-light {
+        color: #3C3883 !important;
+    }
+
+    .mb-3 {
+        margin-bottom: 1rem !important;
+    }
+
+    a:hover .bg-info {
+        background-color: #3C3883 !important;
+    }
+
+    .content-center {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        text-align: center;
+    }
+</style>
+
+<div class="br-pagebody">
+    <div class="row row-sm">
+        <div class="col-sm-4 col-xl-4 mb-3">
+            <a asp-action="Index" asp-controller="Student">
+                <div class="bg-info rounded overflow-hidden">
+                    <div class="pd-x-20 pd-t-20 d-flex align-items-center">
+                        <i class="fas fa-user-graduate tx-60 lh-0 tx-white op-7"></i>
+                        <div class="mg-r-20 content-center">
+                            <p class="tx-20 tx-spacing-1 tx-mont tx-bold tx-uppercase tx-white-8 mg-b-10">Students</p>
+                            <p class="tx-24 tx-white tx-lato tx-bold mg-b-0 lh-1">@Model.Students.Count()</p>
+                        </div>
+                    </div>
+                    <div id="ch1" class="ht-50 tr-y-1"></div>
+                </div>
+            </a>
+        </div><!-- col-3 -->
+
+        <div class="col-sm-4 col-xl-4 mb-3">
+            <a asp-action="Index" asp-controller="Teacher">
+                <div class="bg-info rounded overflow-hidden">
+                    <div class="pd-x-20 pd-t-20 d-flex align-items-center">
+                        <i class="fas fa-chalkboard-teacher tx-60 lh-0 tx-white op-7"></i>
+                        <div class="mg-r-20 content-center">
+                            <p class="tx-20 tx-spacing-1 tx-mont tx-bold tx-uppercase tx-white-8 mg-b-10">Teachers</p>
+                            <p class="tx-24 tx-white tx-lato tx-bold mg-b-0 lh-1">@Model.Teachers.Count()</p>
+                        </div>
+                    </div>
+                    <div id="ch1" class="ht-50 tr-y-1"></div>
+                </div>
+            </a>
+        </div><!-- col-3 -->
+
+        <div class="col-sm-4 col-xl-4 mb-3">
+            <a asp-action="Index" asp-controller="Year">
+                <div class="bg-info rounded overflow-hidden">
+                    <div class="pd-x-20 pd-t-20 d-flex align-items-center">
+                        <i class="fas fa-calendar-alt tx-60 lh-0 tx-white op-7"></i>
+                        <div class="mg-r-20 content-center">
+                            <p class="tx-20 tx-spacing-1 tx-mont tx-bold tx-uppercase tx-white-8 mg-b-10">Years</p>
+                            <p class="tx-24 tx-white tx-lato tx-bold mg-b-0 lh-1">@Model.Years.Count()</p>
+                        </div>
+                    </div>
+                    <div id="ch1" class="ht-50 tr-y-1"></div>
+                </div>
+            </a>
+        </div><!-- col-3 -->
+
+        <div class="col-sm-4 col-xl-4 mb-3">
+            <a asp-action="Index" asp-controller="PClass">
+                <div class="bg-info rounded overflow-hidden">
+                    <div class="pd-x-20 pd-t-20 d-flex align-items-center">
+                        <i class="fas fa-school tx-60 lh-0 tx-white op-7"></i>
+                        <div class="mg-r-20 content-center">
+                            <p class="tx-20 tx-spacing-1 tx-mont tx-bold tx-uppercase tx-white-8 mg-b-10">Classes</p>
+                            <p class="tx-24 tx-white tx-lato tx-bold mg-b-0 lh-1">@Model.Classes.Count()</p>
+                        </div>
+                    </div>
+                    <div id="ch1" class="ht-50 tr-y-1"></div>
+                </div>
+            </a>
+        </div><!-- col-3 -->
+
+        <div class="col-sm-4 col-xl-4 mb-3">
+            <a asp-action="Index" asp-controller="Surveys">
+                <div class="bg-info rounded overflow-hidden">
+                    <div class="pd-x-20 pd-t-20 d-flex align-items-center">
+                        <i class="fas fa-poll-h tx-60 lh-0 tx-white op-7"></i>
+                        <div class="mg-r-20 content-center">
+                            <p class="tx-20 tx-spacing-1 tx-mont tx-bold tx-uppercase tx-white-8 mg-b-10">Surveys</p>
+                            <p class="tx-24 tx-white tx-lato tx-bold mg-b-0 lh-1">@Model.Surveys.Count()</p>
+                        </div>
+                    </div>
+                    <div id="ch1" class="ht-50 tr-y-1"></div>
+                </div>
+            </a>
+        </div><!-- col-3 -->
+
+        <div class="col-sm-4 col-xl-4 mb-3">
+            <a asp-action="Index" asp-controller="Behavior">
+                <div class="bg-info rounded overflow-hidden">
+                    <div class="pd-x-20 pd-t-20 d-flex align-items-center">
+                        <i class="fas fa-chart-line tx-60 lh-0 tx-white op-7"></i> 
+                        <div class="mg-r-20 content-center">
+                            <p class="tx-20 tx-spacing-1 tx-mont tx-bold tx-uppercase tx-white-8 mg-b-10">Behavior</p>
+                            <p class="tx-24 tx-white tx-lato tx-bold mg-b-0 lh-1">@Model.Behaviors.Count()</p>
+                        </div>
+                    </div>
+                    <div id="ch1" class="ht-50 tr-y-1"></div>
+                </div>
+            </a>
+        </div><!-- col-3 -->
+
+
+    </div>
+</div><!-- br-pagebody -->
