@@ -80,4 +80,5 @@ Parents benefit from:
 
 For any questions or contributions, feel free to contact:
 - **GitHub:** [qassemshaban7](https://github.com/qassemshaban7)
+- **LinkedIn:** [LinkedIn Profile](https://www.linkedin.com/in/qassemshaban)
 - **Email:** [qassemshaban7@gmail.com]
